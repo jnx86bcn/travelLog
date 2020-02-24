@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactMapGL, { Marker } from 'react-map-gl';
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 
 import { listLogEntries } from './API.js';
 
@@ -23,36 +23,45 @@ const App = () => {
   },[]);
 
   return (
-    <ReactMapGL
-      {...viewport}
-      mapStyle='mapbox://styles/jnx86bcn/ck6zkmp0e4dcs1is7fz5orosd'
-      mapboxApiAccessToken={process.env.REACT_APP_MAP_TOKEN}
-      onViewportChange={setViewport}
-    >
-      {
-        logsEntries.map((entry,index)=>{
-          return(
-            <Marker key = {index} mapboxApiAccessToken={process.env.REACT_APP_MAP_TOKEN} latitude={entry.latitude} longitude={entry.longitude} offsetLeft={-20} offsetTop={-10}>
-              <svg 
-              viewBox="0 0 24 24"
-              style={{
-                width:"24px",
-                height:"24px"
-              }}
-              stroke="#2f3542"
-              fill="none" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              className="marker">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </Marker>
-          )
-        })
-      }
+    <>
+      <ReactMapGL
+        {...viewport}
+        mapStyle='mapbox://styles/jnx86bcn/ck70y2hm5044j1irt32r1mzn7'
+        mapboxApiAccessToken={process.env.REACT_APP_MAP_TOKEN}
+        onViewportChange={setViewport}>
+        {
+          logsEntries.map((entry,index)=>{
+            return(
+              <Marker key = {entry._id} 
+                mapboxApiAccessToken={process.env.REACT_APP_MAP_TOKEN} 
+                latitude={entry.latitude} 
+                longitude={entry.longitude}>
+                <div>
+                  <img 
+                    className='marker' 
+                    style={{
+                      height: `${7 * viewport.zoom}px`,
+                      width: `${7 * viewport.zoom}px`,
+                    }}
+                    src='https://i.imgur.com/y0G5YTX.png' 
+                    alt=''/>
+                </div>
+              </Marker>
+            )
+          })
+        }
+      <Popup
+        latitude={37.78}
+        longitude={-122.41}
+        closeButton={true}
+        closeOnClick={false}
+        onClose={() => this.setState({showPopup: false})}
+        anchor="top" >
+        <div>You are here</div>
+      </Popup>
+      </ReactMapGL>
 
-    </ReactMapGL>
+    </>
   );
 };
 
