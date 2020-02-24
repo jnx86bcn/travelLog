@@ -8,7 +8,7 @@ const logs = require('./api/logs.js');
 
 require('dotenv').config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 //db conn
 mongoose.connect(process.env.DATABASE_URL,{
