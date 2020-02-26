@@ -3,6 +3,8 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 
 import { listLogEntries } from './API.js';
 
+import LogEntryForm from './LogEntryForm';
+
 const App = () => {
   const [logsEntries,setLogsEntries] = useState([])
   const [showPopup,setShowPopup] = useState({})
@@ -18,11 +20,13 @@ const App = () => {
   });
 
   useEffect(()=>{
-    (async ()=>{
+    getEntries();
+  },[]);
+
+  async function  getEntries() {
       const logsEntries = await listLogEntries();
       setLogsEntries(logsEntries);
-    })();
-  },[]);
+  }
 
   function addNewMarker(viewport) {
     const [longitude,latitude] = viewport.lngLat
@@ -81,6 +85,7 @@ const App = () => {
                     <div className='popup'>
                       <h3>{entry.title}</h3>
                       <p>{entry.description}</p>
+                      { entry.image ? <img src={ entry.image } alt={ entry.title } /> : null}
                       <small>Visited on {new Date(entry.visit_Date).toLocaleDateString()}</small>
                     </div>
                   </Popup>:null
@@ -117,10 +122,14 @@ const App = () => {
               longitude={addNewEntry.longitude}
               closeButton={true}
               closeOnClick={false}
+              dynamicPosition={true}
               onClose={()=>setAddNewEntry(null)}
               anchor='top'>
               <div className='popup'>
-                <h3>Add a new entry here</h3>
+                <LogEntryForm onClose={()=>{
+                  setAddNewEntry(null);
+                  getEntries();
+                }} location={addNewEntry}/>
               </div>
             </Popup>
         </> :null}
