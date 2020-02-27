@@ -7,6 +7,7 @@ const LogEntryForm = ({location,onClose}) => {
 
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState('');
+    const { register,handleSubmit } = useForm();
 
     const onSubmit = async (register) => {
         try {
@@ -19,15 +20,14 @@ const LogEntryForm = ({location,onClose}) => {
         } catch (error) {
             setError(error.message);
             setLoading(false);
-            onClose();
         }
     }
-
-    const { register,handleSubmit } = useForm();
 
     return(
         <form className='entry-form' onSubmit={handleSubmit(onSubmit)}>
             { error ? <h3 className='error'>{error}</h3> : null}
+            <label htmlFor="ApiKey">API_KEY</label>
+            <input type='password' name='ApiKey' required ref={register}/>
             <label htmlFor="title">Title</label>
             <input type='text' name='title' required ref={register}/>
             <label htmlFor="comments">Comments</label>
