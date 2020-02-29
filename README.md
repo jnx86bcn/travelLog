@@ -20,4 +20,8 @@ A full stack application to store / list places you have traveled.
 * [x] Create Form to add a new entry
 * [x] Setup Map SDK on client
 * [x] List all log entries on map
-* [] DEPLOY!# travelLog
+* [x] DEPLOY!# travelLog
+
+### LINK
+
+https://build-rose-ten.now.sh

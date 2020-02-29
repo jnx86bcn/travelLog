@@ -20,7 +20,7 @@
       "NODE_ENV": "production",
       "PORT": "1337",
       "DATABASE_URL": "@travel-log-db",
-      "CORS_ORIGIN": "https://travel-log-tau.now.sh",
+      "CORS_ORIGIN": "https://build-rose-ten.now.sh",
       "API_KEY": "@travel-log-api-key"
     }
   }
